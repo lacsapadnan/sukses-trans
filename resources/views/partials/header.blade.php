@@ -14,8 +14,8 @@
         <!--end::Sidebar mobile toggle-->
         <!--begin::Mobile logo-->
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-            <a href="../../demo1/dist/index.html" class="d-lg-none">
-                <img alt="Logo" src="assets/media/logos/default-small.svg" class="h-30px" />
+            <a href="{{ route('dashboard') }}" class="d-lg-none">
+                <img alt="Logo" src="{{ URL::asset('assets/media/logos/logo-dark.svg') }}" class="h-30px" />
             </a>
         </div>
         <!--end::Mobile logo-->
@@ -32,24 +32,22 @@
                 <div class="px-2 my-5 menu menu-rounded menu-column menu-lg-row my-lg-0 align-items-stretch fw-semibold px-lg-0"
                     id="kt_app_header_menu" data-kt-menu="true">
                     <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-                        class="menu-item here show menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
+                    <div class="menu-item menu-lg-down-accordion me-0 me-lg-2 {{ request()->routeIs('dashboard') ? ' here' : '' }}">
                         <!--begin:Menu link-->
-                        <span class="menu-link">
+                        <a href="{{ route('dashboard') }}" class="menu-link">
                             <span class="menu-title">Dashboards</span>
                             <span class="menu-arrow d-lg-none"></span>
-                        </span>
+                        </a>
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-                        class="menu-item menu-lg-down-accordion me-0 me-lg-2">
+                    <div class="menu-item menu-lg-down-accordion me-0 me-lg-2 {{ request()->routeIs('user.*') ? ' here' : '' }}">
                         <!--begin:Menu link-->
-                        <span class="menu-link">
-                            <span class="menu-title">Pages</span>
+                        <a href="{{ route('user.index') }}" class="menu-link">
+                            <span class="menu-title">User</span>
                             <span class="menu-arrow d-lg-none"></span>
-                        </span>
+                        </a>
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->
