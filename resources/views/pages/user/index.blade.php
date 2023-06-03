@@ -128,10 +128,6 @@
                     order: [],
                     responsive: true,
                     pageLength: 10,
-                    scrollX: true,
-                    fixedColumns: {
-                        left: 3
-                    },
                     "ajax": {
                         url: '{{ route('user.data') }}',
                         type: 'GET',
