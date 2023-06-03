@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContainerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -26,12 +27,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('user', UserController::class);
-    Route::resource('container', ContainerController::class);
+    Route::resource('user', UserController::class)->except(['create', 'show']);
+    Route::resource('container', ContainerController::class)->except(['create', 'show']);
+    Route::resource('product', ProductController::class)->except(['create', 'show']);
 
     // Data Ajax
     Route::get('data/user', [UserController::class, 'data'])->name('user.data');
     Route::get('data/container', [ContainerController::class, 'data'])->name('container.data');
+    Route::get('data/product', [ProductController::class, 'data'])->name('product.data');
 });
 
 require __DIR__ . '/auth.php';

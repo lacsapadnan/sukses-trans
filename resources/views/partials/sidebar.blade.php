@@ -95,18 +95,18 @@
                 </div>
                 <!--end:Menu item-->
                 <!--begin:Menu item-->
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <div class="menu-item {{ request()->routeIs('product.*') ? ' here' : '' }}">
                     <!--begin:Menu link-->
-                    <span class="menu-link">
+                    <a href="{{ route('product.index') }}" class="menu-link">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-abstract-39 fs-2">
+                            <i class="ki-duotone ki-cube-2 fs-2">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
+                                <span class="path3"></span>
                             </i>
                         </span>
-                        <span class="menu-title">Social</span>
-                        <span class="menu-arrow"></span>
-                    </span>
+                        <span class="menu-title">Produk</span>
+                    </a>
                     <!--end:Menu link-->
                     <!--begin:Menu sub-->
                     <div class="menu-sub menu-sub-accordion">

@@ -63,13 +63,12 @@
                     </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-                        class="menu-item menu-lg-down-accordion me-0 me-lg-2">
+                    <div class="menu-item menu-lg-down-accordion me-0 me-lg-2 {{ request()->routeIs('product.*') ? ' here' : '' }}">
                         <!--begin:Menu link-->
-                        <span class="menu-link">
-                            <span class="menu-title">Layouts</span>
+                        <a href="{{ route('product.index') }}" class="menu-link">
+                            <span class="menu-title">Produk</span>
                             <span class="menu-arrow d-lg-none"></span>
-                        </span>
+                        </a>
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->
