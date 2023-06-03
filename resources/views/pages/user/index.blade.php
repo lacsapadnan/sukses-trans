@@ -5,7 +5,7 @@
 @section('breadcrumb', 'User Management')
 
 @push('addon-style')
-    <link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('content')
@@ -108,7 +108,7 @@
 @endsection
 
 @push('addon-script')
-    <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="{{ URL::asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script>
         "use strict";
 
