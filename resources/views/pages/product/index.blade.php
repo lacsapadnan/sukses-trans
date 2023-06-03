@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
-@section('title', 'User')
-@section('page-title', 'User List')
-@section('breadcrumb', 'User Management')
+@section('title', 'Produk')
+@section('page-title', 'Produk List')
+@section('breadcrumb', 'Produk Management')
 
 @push('addon-style')
     <link href="{{ URL::asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
@@ -173,7 +173,7 @@
 
             // Hook export buttons
             var exportButtons = () => {
-                const documentTitle = 'Customer Orders Report';
+                const documentTitle = 'Produk Data Report';
                 var buttons = new $.fn.dataTable.Buttons(table, {
                     buttons: [{
                             extend: 'copyHtml5',
