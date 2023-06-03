@@ -52,13 +52,12 @@
                     </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-                        class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+                    <div class="menu-item menu-lg-down-accordion me-0 me-lg-2 {{ request()->routeIs('container.*') ? ' here' : '' }}">
                         <!--begin:Menu link-->
-                        <span class="menu-link">
-                            <span class="menu-title">Apps</span>
+                        <a href="{{ route('container.index') }}" class="menu-link">
+                            <span class="menu-title">Container</span>
                             <span class="menu-arrow d-lg-none"></span>
-                        </span>
+                        </a>
                         <!--end:Menu link-->
                         <!--begin:Menu sub-->
                     </div>
