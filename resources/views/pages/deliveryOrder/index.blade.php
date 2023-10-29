@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
-@section('title', 'Container')
-@section('page-title', 'Container List')
-@section('breadcrumb', 'Container Management')
+@section('title', 'Surat Jalan')
+@section('page-title', 'Surat Jalan List')
+@section('breadcrumb', 'Surat Jalan Management')
 
 @push('addon-style')
     <link href="{{ URL::asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
@@ -26,24 +26,6 @@
             </button>
         </div>
     @endif
-    @if ($errors->any())
-        <div class="p-5 mb-10 alert alert-dismissible bg-danger d-flex flex-column flex-sm-row">
-            <div class="d-flex flex-column text-light pe-0 pe-sm-10">
-                <h4 class="mb-2 text-light">Gagal Menyimpan data</h4>
-                <span>
-                    @foreach ($errors->all() as $error)
-                        {{ $error }} <br>
-                    @endforeach
-                </span>
-            </div>
-            <button type="button"
-                class="top-0 m-2 position-absolute position-sm-relative m-sm-0 end-0 btn btn-icon ms-sm-auto"
-                data-bs-dismiss="alert">
-                <i class="ki-duotone ki-cross fs-1 text-light"><span class="path1"></span><span
-                        class="path2"></span></i>
-            </button>
-        </div>
-    @endif
     <div class="card">
         <div class="pt-6 border-0 card-header">
             <div class="card-title">
@@ -51,7 +33,7 @@
                 <div class="my-1 d-flex align-items-center position-relative">
                     <i class="ki-duotone ki-magnifier fs-1 position-absolute ms-4"><span class="path1"></span><span
                             class="path2"></span></i> <input type="text" data-kt-filter="search"
-                        class="form-control form-control-solid w-250px ps-14" placeholder="Cari data kontainer">
+                        class="form-control form-control-solid w-250px ps-14" placeholder="Cari data user">
                 </div>
                 <!--end::Search-->
             </div>
@@ -62,9 +44,9 @@
                         <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
                         Export Data
                     </button>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_1">
+                    <a href="{{ route('delivery-order.create') }}" type="button" class="btn btn-primary">
                         Tambah Data
-                    </button>
+                    </a>
                     <!--begin::Menu-->
                     <div id="kt_datatable_example_export_menu"
                         class="py-4 menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-200px"
@@ -105,21 +87,16 @@
         <div class="card-body">
             <div id="kt_datatable_example_wrapper dt-bootstrap4 no-footer" class="datatables_wrapper">
                 <div class="table-responsive">
-                    <table class="table table-row-bordered gy-5 gs-7" id="kt_datatable_example">
+                    <table class="table table-striped table-row-bordered gy-5 gs-7" id="kt_datatable_example">
                         <thead>
                             <tr class="text-gray-800 fw-semibold fs-6">
                                 <th>No.</th>
-                                <th>Invoice</th>
-                                <th>Nama Consignee</th>
-                                <th>Tanggal Pendaftaran</th>
-                                <th>Tanggal Keluar Container</th>
-                                <th>No. BL</th>
-                                <th>No. Pendaftaran</th>
-                                <th>No. Container</th>
-                                <th>Lift Off</th>
-                                <th>Repair</th>
-                                <th>Demurrage</th>
-                                <th>Tujuan Container</th>
+                                <th>No. Surat Jalan</th>
+                                <th>No. PO</th>
+                                <th>Dikirim Dengan</th>
+                                <th>No. Polisi</th>
+                                <th>Nama Pengemudi</th>
+                                <th>Tanggal</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -131,7 +108,7 @@
         </div>
     </div>
 
-    @includeIf('pages.container.modal')
+    @includeIf('pages.deliveryOrder.modal')
 @endsection
 
 @push('addon-script')
@@ -153,13 +130,10 @@
                 // Init datatable --- more info on datatables: https://datatables.net/manual/
                 datatable = $(table).DataTable({
                     order: [],
+                    responsive: true,
                     pageLength: 10,
-                    scrollX: true,
-                    fixedColumns: {
-                        left: 3
-                    },
                     "ajax": {
-                        url: '{{ route('container.data') }}',
+                        url: '{{ route('deliveryOrder.data') }}',
                         type: 'GET',
                         dataSrc: '',
                     },
@@ -170,15 +144,23 @@
                             },
                         },
                         {
-                            data: 'invoice'
+                            data: 'number'
                         },
                         {
-                            data: 'consignee_name'
+                            data: 'po_number'
                         },
                         {
-                            // format date
-                            data: 'register_date',
-                            render: function(data, type, row) {
+                            data: 'delivery_with'
+                        },
+                        {
+                            data: 'police_number'
+                        },
+                        {
+                            data: 'driver_name'
+                        },
+                        {
+                            data: 'date',
+                             render: function(data, type, row) {
                                 // format date ID
                                 var date = new Date(data);
                                 var options = {
@@ -188,97 +170,36 @@
                                 };
                                 return new Intl.DateTimeFormat('id-ID', options).format(date);
                             }
-                        },
-                        {
-                            data: 'out_date',
-                            render: function(data, type, row) {
-                                // format date ID
-                                var date = new Date(data);
-                                var options = {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric'
-                                };
-                                return new Intl.DateTimeFormat('id-ID', options).format(date);
-                            }
-                        },
-                        {
-                            data: 'bl_number'
-                        },
-                        {
-                            data: 'register_number'
-                        },
-                        {
-                            data: 'container_number'
-                        },
-                        {
-                            data: 'lift_off'
-                        },
-                        {
-                            data: 'repair',
-                            render: $.fn.dataTable.render.number('.', ',', 0, 'Rp. ')
-                        },
-                        {
-                            data: 'demurrage',
-                            render: $.fn.dataTable.render.number('.', ',', 0, 'Rp. ')
-                        },
-                        {
-                            data: 'destination'
                         },
                         {
                             data: null
                         },
                     ],
                     "columnDefs": [{
-                            className: 'min-w-150px',
-                            target: 1,
-                        },
-                        {
-                            className: 'min-w-100px',
-                            target: 4,
-                        },
-                        {
-                            className: 'min-w-100px',
-                            target: 5,
-                        },
-                        {
-                            className: 'min-w-100px',
-                            target: 8,
-                        },
-                        {
-                            className: 'min-w-100px',
-                            target: 9,
-                        },
-                        {
-                            className: 'min-w-100px',
-                            target: 10,
-                        },
-                        {
-                            className: 'min-w-200px',
-                            targets: 12,
-                            render: function(data, type, row) {
-                                var editUrl = "/container/" + row.id + "/edit";
-                                var deleteUrl = "/container/" + row.id;
+                        className: 'min-w-200px',
+                        targets: 7,
+                        render: function(data, type, row) {
+                            var editUrl = "/delivery-order/" + row.id + "/edit";
+                            var deleteUrl = "/delivery-order/" + row.id;
 
-                                return '<a href="' + editUrl +
-                                    '" type="button" class="btn btn-sm btn-warning me-2">Edit</a>' +
-                                    '<form action="' + deleteUrl +
-                                    '" method="POST" class="d-inline">' +
-                                    '@csrf' +
-                                    '@method('delete')' +
-                                    '<button class="btn btn-sm btn-danger">Hapus</button>' +
-                                    '</form>';
-                            },
+                            return '<a href="' + editUrl +
+                                '" type="button" class="btn btn-sm btn-warning me-2">Edit</a>' +
+                                '<form action="' + deleteUrl +
+                                '" method="POST" class="d-inline">' +
+                                '@csrf' +
+                                '@method('delete')' +
+                                '<button class="btn btn-sm btn-danger">Hapus</button>' +
+                                '</form>';
+                        },
 
 
-                        },
-                    ]
+                    }, ]
                 });
             }
 
             // Hook export buttons
             var exportButtons = () => {
-                const documentTitle = 'Container Data Report';
+                const documentTitle = 'Surat Jalan Data Report';
                 var buttons = new $.fn.dataTable.Buttons(table, {
                     buttons: [{
                             extend: 'copyHtml5',
@@ -344,47 +265,6 @@
         // On document ready
         KTUtil.onDOMContentLoaded(function() {
             KTDatatablesExample.init();
-        });
-    </script>
-    <script>
-        new tempusDominus.TempusDominus(document.getElementById("kt_td_picker_register_date"), {
-            localization: {
-                locale: "id",
-                startOfTheWeek: 1
-            },
-            display: {
-                viewMode: "calendar",
-
-                components: {
-                    decades: true,
-                    year: true,
-                    month: true,
-                    date: true,
-                    hours: false,
-                    minutes: false,
-                    seconds: false
-                }
-            }
-        });
-
-        new tempusDominus.TempusDominus(document.getElementById("kt_td_picker_out_date"), {
-            localization: {
-                locale: "id",
-                startOfTheWeek: 1
-            },
-            display: {
-                viewMode: "calendar",
-
-                components: {
-                    decades: true,
-                    year: true,
-                    month: true,
-                    date: true,
-                    hours: false,
-                    minutes: false,
-                    seconds: false
-                }
-            }
         });
     </script>
 @endpush

@@ -26,6 +26,24 @@
             </button>
         </div>
     @endif
+    @if ($errors->any())
+        <div class="p-5 mb-10 alert alert-dismissible bg-danger d-flex flex-column flex-sm-row">
+            <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+                <h4 class="mb-2 text-light">Gagal Menyimpan data</h4>
+                <span>
+                    @foreach ($errors->all() as $error)
+                        {{ $error }} <br>
+                    @endforeach
+                </span>
+            </div>
+            <button type="button"
+                class="top-0 m-2 position-absolute position-sm-relative m-sm-0 end-0 btn btn-icon ms-sm-auto"
+                data-bs-dismiss="alert">
+                <i class="ki-duotone ki-cross fs-1 text-light"><span class="path1"></span><span
+                        class="path2"></span></i>
+            </button>
+        </div>
+    @endif
     <div class="card">
         <div class="pt-6 border-0 card-header">
             <div class="card-title">

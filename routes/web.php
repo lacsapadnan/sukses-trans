@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContainerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DeliveryOrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -30,11 +31,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('user', UserController::class)->except(['create', 'show']);
     Route::resource('container', ContainerController::class)->except(['create', 'show']);
     Route::resource('product', ProductController::class)->except(['create', 'show']);
+    Route::resource('delivery-order', DeliveryOrderController::class);
 
     // Data Ajax
     Route::get('data/user', [UserController::class, 'data'])->name('user.data');
     Route::get('data/container', [ContainerController::class, 'data'])->name('container.data');
     Route::get('data/product', [ProductController::class, 'data'])->name('product.data');
+    Route::get('data/delivery-order', [DeliveryOrderController::class, 'data'])->name('deliveryOrder.data');
 });
 
 require __DIR__ . '/auth.php';

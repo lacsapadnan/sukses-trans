@@ -32,7 +32,7 @@
                 <div class="px-2 my-5 menu menu-rounded menu-column menu-lg-row my-lg-0 align-items-stretch fw-semibold px-lg-0"
                     id="kt_app_header_menu" data-kt-menu="true">
                     <!--begin:Menu item-->
-                    <div class="menu-item menu-lg-down-accordion me-0 me-lg-2 {{ request()->routeIs('dashboard') ? ' here' : '' }}">
+                    <div class="menu-item me-0 me-lg-2 {{ request()->routeIs('dashboard') ? ' here' : '' }}">
                         <!--begin:Menu link-->
                         <a href="{{ route('dashboard') }}" class="menu-link">
                             <span class="menu-title">Dashboards</span>
@@ -42,7 +42,7 @@
                     </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
-                    <div class="menu-item menu-lg-down-accordion me-0 me-lg-2 {{ request()->routeIs('user.*') ? ' here' : '' }}">
+                    <div class="menu-item me-0 me-lg-2 {{ request()->routeIs('user.*') ? ' here' : '' }}">
                         <!--begin:Menu link-->
                         <a href="{{ route('user.index') }}" class="menu-link">
                             <span class="menu-title">User</span>
@@ -52,7 +52,7 @@
                     </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
-                    <div class="menu-item menu-lg-down-accordion me-0 me-lg-2 {{ request()->routeIs('container.*') ? ' here' : '' }}">
+                    <div class="menu-item me-0 me-lg-2 {{ request()->routeIs('container.*') ? ' here' : '' }}">
                         <!--begin:Menu link-->
                         <a href="{{ route('container.index') }}" class="menu-link">
                             <span class="menu-title">Container</span>
@@ -63,7 +63,7 @@
                     </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
-                    <div class="menu-item menu-lg-down-accordion me-0 me-lg-2 {{ request()->routeIs('product.*') ? ' here' : '' }}">
+                    <div class="menu-item me-0 me-lg-2 {{ request()->routeIs('product.*') ? ' here' : '' }}">
                         <!--begin:Menu link-->
                         <a href="{{ route('product.index') }}" class="menu-link">
                             <span class="menu-title">Produk</span>
@@ -73,76 +73,12 @@
                     </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-                        class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
+                    <div class="menu-item me-0 me-lg-2 {{ request()->routeIs('delivery-order.*') ? ' here' : '' }}">
                         <!--begin:Menu link-->
-                        <span class="menu-link">
-                            <span class="menu-title">Help</span>
+                        <a href="{{ route('delivery-order.index') }}" class="menu-link">
+                            <span class="menu-title">Surat Jalan</span>
                             <span class="menu-arrow d-lg-none"></span>
-                        </span>
-                        <!--end:Menu link-->
-                        <!--begin:Menu sub-->
-                        <div
-                            class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px">
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link"
-                                    href="https://preview.keenthemes.com/html/metronic/docs/base/utilities"
-                                    target="_blank"
-                                    title="Check out over 200 in-house components, plugins and ready for use solutions"
-                                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
-                                    data-bs-placement="right">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-rocket fs-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                    </span>
-                                    <span class="menu-title">Components</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="https://preview.keenthemes.com/html/metronic/docs"
-                                    target="_blank" title="Check out the complete documentation"
-                                    data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
-                                    data-bs-placement="right">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-abstract-26 fs-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                    </span>
-                                    <span class="menu-title">Documentation</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link"
-                                    href="https://preview.keenthemes.com/html/metronic/docs/getting-started/changelog"
-                                    target="_blank">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-code fs-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                            <span class="path4"></span>
-                                        </i>
-                                    </span>
-                                    <span class="menu-title">Changelog v8.1.8</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                        </div>
-                        <!--end:Menu sub-->
+                        </a>
                     </div>
                     <!--end:Menu item-->
                 </div>
@@ -157,7 +93,7 @@
                     <div class="cursor-pointer symbol symbol-30px symbol-md-40px"
                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                         data-kt-menu-placement="bottom-end">
-                        <img src="assets/media/avatars/300-1.jpg" alt="user" />
+                        <img src="{{ URL::asset('assets/media/avatars/300-1.jpg') }}" alt="user" />
                     </div>
                     <!--begin::User account menu-->
                     <div class="py-4 menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold fs-6 w-275px"
@@ -167,7 +103,7 @@
                             <div class="px-3 menu-content d-flex align-items-center">
                                 <!--begin::Avatar-->
                                 <div class="symbol symbol-50px me-5">
-                                    <img alt="Logo" src="assets/media/avatars/300-1.jpg" />
+                                    <img alt="Logo" src="{{ URL::asset('assets/media/avatars/300-1.jpg') }}" />
                                 </div>
                                 <!--end::Avatar-->
                                 <!--begin::Username-->
@@ -190,8 +126,11 @@
                         <!--end::Menu item-->
                         <!--begin::Menu item-->
                         <div class="px-5 menu-item">
-                            <a href="../../demo1/dist/authentication/layouts/corporate/sign-in.html"
-                                class="px-5 menu-link">Sign Out</a>
+                            <a href="{{ route('logout') }}" class="px-5 menu-link"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Keluar</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </div>
                         <!--end::Menu item-->
                     </div>
