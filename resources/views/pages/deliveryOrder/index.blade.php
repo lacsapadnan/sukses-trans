@@ -107,12 +107,55 @@
             </div>
         </div>
     </div>
-
     @includeIf('pages.deliveryOrder.modal')
 @endsection
 
 @push('addon-script')
     <script src="{{ URL::asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+    <script>
+        $(document).on('click', '.detail-btn', function() {
+            var deliveryOrderId = $(this).data('id');
+
+            $.ajax({
+                url: "/delivery-order/" + deliveryOrderId,
+                method: 'GET',
+                success: function(response) {
+                    var detailTable = $("#kt_datatable_detail").DataTable();
+                    detailTable.clear().draw();
+
+                    // Set main delivery order data
+                    var deliveryOrder = response;
+
+                    // Display main delivery order information, e.g., in a title
+                    $(".modal-title").text("Detail Data Delivery Order - Order Number: " + deliveryOrder
+                    .number);
+
+                    // Iterate over the details array and append rows to the table
+                    deliveryOrder.details.forEach(function(item, index) {
+                        var row = [
+                            index + 1,
+                            item.product.name,
+                            item.packing_quantity,
+                            item.quantity,
+                            item.description
+                        ];
+
+                        // Append the row to the DataTable
+                        detailTable.row.add(row).draw();
+                    });
+
+                    // Show the modal
+                    $("#detail_modal").modal('show');
+                },
+                error: function(error) {
+                    // Handle error
+                    console.error("Error fetching mahasiswa details:", error);
+                }
+            });
+        });
+    </script>
+
+
     <script>
         "use strict";
 
@@ -160,7 +203,7 @@
                         },
                         {
                             data: 'date',
-                             render: function(data, type, row) {
+                            render: function(data, type, row) {
                                 // format date ID
                                 var date = new Date(data);
                                 var options = {
@@ -182,7 +225,8 @@
                             var editUrl = "/delivery-order/" + row.id + "/edit";
                             var deleteUrl = "/delivery-order/" + row.id;
 
-                            return '<a href="' + editUrl +
+                            return '<button class="btn btn-sm btn-info detail-btn me-2" data-id="' +
+                                row.id + '">Detail</button>' + '<a href="' + editUrl +
                                 '" type="button" class="btn btn-sm btn-warning me-2">Edit</a>' +
                                 '<form action="' + deleteUrl +
                                 '" method="POST" class="d-inline">' +

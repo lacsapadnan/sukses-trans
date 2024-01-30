@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('invoice');
             $table->string('consignee_name');
-            $table->date('register_date');
             $table->date('out_date');
             $table->integer('bl_number');
-            $table->integer('register_number');
+            $table->integer('application_number');
             $table->integer('container_number');
             $table->string('lift_off');
             $table->integer('repair');

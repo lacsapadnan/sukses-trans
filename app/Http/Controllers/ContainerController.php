@@ -36,7 +36,6 @@ class ContainerController extends Controller
     {
         $data = $request->all();
         // format date
-        $data['register_date'] = date('Y-m-d', strtotime($data['register_date']));
         $data['out_date'] = date('Y-m-d', strtotime($data['out_date']));
         Container::create($data);
 
@@ -65,14 +64,27 @@ class ContainerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = $request->all();
-        // format date
-        $data['register_date'] = date('Y-m-d', strtotime($data['register_date']));
-        $data['out_date'] = date('Y-m-d', strtotime($data['out_date']));
-        $container = Container::findOrFail($id);
-        $container->update($data);
+        try {
+            $container = Container::findOrFail($id);
 
-        return redirect()->route('container.index')->with('success', 'Container berhasil diubah.');
+            // Check if 'register_date' and 'out_date' are present in the request
+            if ($request->has('register_date')) {
+                $container->register_date = date('Y-m-d', strtotime($request->input('register_date')));
+            }
+
+            if ($request->has('out_date')) {
+                $container->out_date = date('Y-m-d', strtotime($request->input('out_date')));
+            }
+
+            // Additional checks or modifications for other fields if needed
+
+            $container->update();
+
+            return redirect()->route('container.index')->with('success', 'Container berhasil diubah.');
+        } catch (\Exception $e) {
+            // Handle the exception, log it, or return an error response
+            return redirect()->route('container.index')->with('error', 'Gagal mengubah container: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -84,5 +96,22 @@ class ContainerController extends Controller
         $container->delete();
 
         return redirect()->route('container.index')->with('success', 'Container berhasil dihapus.');
+    }
+
+    public function uploadFile(Request $request)
+    {
+        $container = Container::find($request->id);
+
+        if ($request->file('file')) {
+            $image = $request->file('file');
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('surat-jalan/');
+            $image->move($destinationPath, $name);
+            $container->file = $name;
+            $container->update();
+        }
+
+
+        return redirect()->back()->with('success', 'Surat jalan berhasil diupload.');
     }
 }

@@ -72,7 +72,7 @@ class DeliveryOrderController extends Controller
     public function show(string $id)
     {
         $deliveryOrder = DeliveryOrder::with('details.product')->findOrFail($id);
-        return view('pages.deliveryOrder.show', compact('deliveryOrder'));
+        return response()->json($deliveryOrder);
     }
 
     /**
@@ -80,7 +80,9 @@ class DeliveryOrderController extends Controller
      */
     public function edit(string $id)
     {
-        return view('pages.deliveryOrder.edit');
+        $deliveryOrder = DeliveryOrder::with('details.product')->findOrFail($id);
+        $products = Product::orderBy('created_at', 'asc')->get();
+        return view('pages.deliveryOrder.edit', compact('deliveryOrder', 'products'));
     }
 
     /**
@@ -88,7 +90,34 @@ class DeliveryOrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $deliveryOrder = DeliveryOrder::findOrFail($id);
+        $deliveryOrder->update([
+            'number' => $request->number,
+            'po_number' => $request->po_number,
+            'date' => date('Y-m-d', strtotime($request->date)),
+            'delivery_with' => $request->delivery_with,
+            'police_number' => $request->police_number,
+            'driver_name' => $request->driver_name,
+        ]);
+
+        $products = $request->input('produk');
+
+        foreach ($products as $productData) {
+            $product_id = $productData['product_id'];
+            $quantity = $productData['quantity'];
+            $packing_quantity = $productData['packing_quantity'];
+            $description = $productData['description'];
+
+            $deliveryOrder->details()->update([
+                'delivery_order_id' => $deliveryOrder->id,
+                'product_id' => $product_id,
+                'quantity' => $quantity,
+                'packing_quantity' => $packing_quantity,
+                'description' => $description,
+            ]);
+        }
+
+        return redirect()->route('delivery-order.index')->with('success', 'Surat jalan berhasil diperbarui');
     }
 
     /**

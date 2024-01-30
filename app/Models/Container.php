@@ -13,10 +13,9 @@ class Container extends Model
     protected $fillable = [
         'invoice',
         'consignee_name',
-        'register_date',
         'out_date',
         'bl_number',
-        'register_number',
+        'application_number',
         'container_number',
         'lift_off',
         'repair',

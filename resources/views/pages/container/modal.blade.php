@@ -33,21 +33,6 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-6">
-                                <label for="name" class="required form-label">Tanggal Pendaftaran</label>
-                                <div class="input-group" id="kt_td_picker_register_date" data-td-target-input="nearest"
-                                    data-td-target-toggle="nearest">
-                                    <input id="kt_td_picker_register_date" type="text" class="form-control"
-                                        data-td-target="#kt_td_picker_register_date" name="register_date" />
-                                    <span class="input-group-text" data-td-target="#kt_td_picker_register_date"
-                                        data-td-toggle="datetimepicker">
-                                        <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span
-                                                class="path2"></span></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-6">
                                 <label for="name" class="required form-label">Tanggal Keluar Container</label>
                                 <div class="input-group" id="kt_td_picker_out_date" data-td-target-input="nearest"
                                     data-td-target-toggle="nearest">
@@ -61,24 +46,24 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="mb-6">
+                                <label for="name" class="required form-label">No. Pengajuan</label>
+                                <input type="text" name="application_number" class="form-control" placeholder="Masukan no. pengajuan" required>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="mb-6">
-                                <label for="name" class="required form-label">No. Pendaftaran</label>
-                                <input type="number" name="register_number" class="form-control" placeholder="Masukan no. pendaftaran" required>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="mb-6">
                                 <label for="name" class="required form-label">No. BL</label>
-                                <input type="number" name="bl_number" class="form-control" placeholder="Masukan no. BL" required>
+                                <input type="text" name="bl_number" class="form-control" placeholder="Masukan no. BL" required>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="mb-6">
                                 <label for="name" class="required form-label">No. Container</label>
-                                <input type="number" name="container_number" class="form-control" placeholder="Masukan no. container" required>
+                                <input type="text" name="container_number" class="form-control" placeholder="Masukan no. container" required>
                             </div>
                         </div>
                     </div>
@@ -92,7 +77,7 @@
                         <div class="col-md-6">
                             <div class="mb-6">
                                 <label for="name" class="required form-label">Lift Off</label>
-                                <input type="text" name="lift_off" class="form-control" placeholder="Masukan lift off" required>
+                                <input type="number" name="lift_off" class="form-control" placeholder="Masukan lift off" required>
                             </div>
                         </div>
                     </div>

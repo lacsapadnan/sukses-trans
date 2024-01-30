@@ -39,8 +39,7 @@
             <button type="button"
                 class="top-0 m-2 position-absolute position-sm-relative m-sm-0 end-0 btn btn-icon ms-sm-auto"
                 data-bs-dismiss="alert">
-                <i class="ki-duotone ki-cross fs-1 text-light"><span class="path1"></span><span
-                        class="path2"></span></i>
+                <i class="ki-duotone ki-cross fs-1 text-light"><span class="path1"></span><span class="path2"></span></i>
             </button>
         </div>
     @endif
@@ -111,7 +110,6 @@
                                 <th>No.</th>
                                 <th>Invoice</th>
                                 <th>Nama Consignee</th>
-                                <th>Tanggal Pendaftaran</th>
                                 <th>Tanggal Keluar Container</th>
                                 <th>No. BL</th>
                                 <th>No. Pendaftaran</th>
@@ -132,6 +130,7 @@
     </div>
 
     @includeIf('pages.container.modal')
+    @includeIf('pages.container.upload')
 @endsection
 
 @push('addon-script')
@@ -176,20 +175,6 @@
                             data: 'consignee_name'
                         },
                         {
-                            // format date
-                            data: 'register_date',
-                            render: function(data, type, row) {
-                                // format date ID
-                                var date = new Date(data);
-                                var options = {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric'
-                                };
-                                return new Intl.DateTimeFormat('id-ID', options).format(date);
-                            }
-                        },
-                        {
                             data: 'out_date',
                             render: function(data, type, row) {
                                 // format date ID
@@ -206,13 +191,14 @@
                             data: 'bl_number'
                         },
                         {
-                            data: 'register_number'
+                            data: 'application_number'
                         },
                         {
                             data: 'container_number'
                         },
                         {
-                            data: 'lift_off'
+                            data: 'lift_off',
+                            render: $.fn.dataTable.render.number('.', ',', 0, 'Rp. ')
                         },
                         {
                             data: 'repair',
@@ -231,46 +217,41 @@
                     ],
                     "columnDefs": [{
                             className: 'min-w-150px',
-                            target: 1,
+                            target: [1, 3],
                         },
                         {
                             className: 'min-w-100px',
-                            target: 4,
-                        },
-                        {
-                            className: 'min-w-100px',
-                            target: 5,
-                        },
-                        {
-                            className: 'min-w-100px',
-                            target: 8,
-                        },
-                        {
-                            className: 'min-w-100px',
-                            target: 9,
-                        },
-                        {
-                            className: 'min-w-100px',
-                            target: 10,
+                            target: [4, 5, 7, 8, 9, 10],
                         },
                         {
                             className: 'min-w-200px',
-                            targets: 12,
+                            targets: 11,
                             render: function(data, type, row) {
                                 var editUrl = "/container/" + row.id + "/edit";
                                 var deleteUrl = "/container/" + row.id;
 
-                                return '<a href="' + editUrl +
-                                    '" type="button" class="btn btn-sm btn-warning me-2">Edit</a>' +
-                                    '<form action="' + deleteUrl +
-                                    '" method="POST" class="d-inline">' +
-                                    '@csrf' +
-                                    '@method('delete')' +
-                                    '<button class="btn btn-sm btn-danger">Hapus</button>' +
-                                    '</form>';
+                                if (row.file === null) {
+                                    return '<a href="' + editUrl +
+                                        '" type="button" class="btn btn-sm btn-warning me-2">Edit</a>' +
+                                        '<form action="' + deleteUrl +
+                                        '" method="POST" class="d-inline">' +
+                                        '@csrf' +
+                                        '@method('delete')' +
+                                        '<button class="btn btn-sm btn-danger">Hapus</button>' +
+                                        '</form>' +
+                                        '<button type="button" class="mt-2 btn btn-sm btn-primary upload-btn" data-id="' +
+                                        row.id +
+                                        '" data-bs-toggle="modal" data-bs-target="#kt_modal_2" onclick="setSelectedContainerId(' +
+                                        row.id + ')">Upload Surat Jalan</button>';
+                                } else {
+                                    // Assuming row.file contains the filename or path
+                                    var openFileUrl = "/surat-jalan/" + row.file;
+
+                                    // Create a link to open the file
+                                    return '<a href="' + openFileUrl +
+                                        '" target="_blank" class="btn btn-sm btn-primary">Lihat Surat Jalan</a>';
+                                }
                             },
-
-
                         },
                     ]
                 });
@@ -347,26 +328,6 @@
         });
     </script>
     <script>
-        new tempusDominus.TempusDominus(document.getElementById("kt_td_picker_register_date"), {
-            localization: {
-                locale: "id",
-                startOfTheWeek: 1
-            },
-            display: {
-                viewMode: "calendar",
-
-                components: {
-                    decades: true,
-                    year: true,
-                    month: true,
-                    date: true,
-                    hours: false,
-                    minutes: false,
-                    seconds: false
-                }
-            }
-        });
-
         new tempusDominus.TempusDominus(document.getElementById("kt_td_picker_out_date"), {
             localization: {
                 locale: "id",
@@ -386,5 +347,11 @@
                 }
             }
         });
+    </script>
+    <script>
+        function setSelectedContainerId(containerId) {
+            console.log(containerId);
+            $('#selectedContainerId').val(containerId);
+        }
     </script>
 @endpush

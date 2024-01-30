@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('data/container', [ContainerController::class, 'data'])->name('container.data');
     Route::get('data/product', [ProductController::class, 'data'])->name('product.data');
     Route::get('data/delivery-order', [DeliveryOrderController::class, 'data'])->name('deliveryOrder.data');
+    Route::put('upload-file', [ContainerController::class, 'uploadFile'])->name('uploadFile');
 });
 
 require __DIR__ . '/auth.php';
